@@ -33,8 +33,8 @@ $ npm run build
 
 ## 插件列表
 
-* [loading plugin](https://github.com/FaureWu/zoro-plugin/tree/master/doc/LOADING_PLUGIN.md) 全局自动记录loading状态，减少重复工作
-* [extend model plugin](https://github.com/FaureWu/zoro-plugin/tree/master/doc/EXTEND_MODEL_PLUGIN.md) 扩展model，实现model公共逻辑，减少重复工作
+* [loading plugin](./doc/LOADING_PLUGIN.md) 全局自动记录loading状态，减少重复工作
+* [extend model plugin](./doc/EXTEND_MODEL_PLUGIN.md) 扩展model，实现model公共逻辑，减少重复工作
 
 ## 开发交流
 
