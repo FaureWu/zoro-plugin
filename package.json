@@ -1,6 +1,6 @@
 {
   "name": "@opcjs/zoro-plugin",
-  "version": "2.0.0",
+  "version": "2.0.0-beta.0",
   "description": "the plugin for zoro",
   "main": "index.js",
   "keywords": [
