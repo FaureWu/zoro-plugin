@@ -1,3 +1,6 @@
 /node_modules
 /dist
-index.js
+/index.js
+/extendModel.js
+/loading.js
+/util.js
