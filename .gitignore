@@ -4,10 +4,10 @@
 /node_modules
 
 # production
-index.js
-loading.js
-extendModel.js
-util.js
+/index.js
+/loading.js
+/extendModel.js
+/util.js
 
 # misc
 .DS_Store
