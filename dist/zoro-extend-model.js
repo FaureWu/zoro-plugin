@@ -16,48 +16,52 @@ function _extends() {
   return _extends.apply(this, arguments);
 }
 
-var noop = function noop() {};
 var isArray = function isArray(arr) {
   return arr instanceof Array;
 };
 var isObject = function isObject(obj) {
   return obj !== null && typeof obj === 'object' && !isArray(obj);
 };
+var isBoolean = function isBoolean(bool) {
+  return typeof bool === 'boolean';
+};
+var isFunction = function isFunction(func) {
+  return typeof func === 'function';
+};
+var assert = function assert(validate, message) {
+  if (isBoolean(validate) && !validate || isFunction(validate) && !validate()) {
+    throw new Error(message);
+  }
+};
 
-var extendModel = {};
+var extendModel = (function (opt) {
+  assert(isObject(opt), "createExtendModel param must be an Object, but we get " + typeof opt);
+  return function (event, _ref) {
+    var DIVIDER = _ref.DIVIDER,
+        PLUGIN_EVENT = _ref.PLUGIN_EVENT;
+    var _opt$state = opt.state,
+        state = _opt$state === void 0 ? {} : _opt$state,
+        _opt$reducers = opt.reducers,
+        reducers = _opt$reducers === void 0 ? {} : _opt$reducers,
+        _opt$effects = opt.effects,
+        effects = _opt$effects === void 0 ? {} : _opt$effects,
+        excludeModels = opt.excludeModels,
+        includeModels = opt.includeModels;
+    event.on(PLUGIN_EVENT.BEFORE_INJECT_MODEL, function (modelOpts) {
+      var namespace = modelOpts.namespace;
+      if (!namespace) return modelOpts;
 
-function extendModelPlugin(event, _ref) {
-  var DIVIDER = _ref.DIVIDER,
-      PLUGIN_EVENT = _ref.PLUGIN_EVENT;
-  var _extendModel = extendModel,
-      _extendModel$state = _extendModel.state,
-      state = _extendModel$state === void 0 ? {} : _extendModel$state,
-      _extendModel$reducers = _extendModel.reducers,
-      reducers = _extendModel$reducers === void 0 ? {} : _extendModel$reducers,
-      _extendModel$effects = _extendModel.effects,
-      effects = _extendModel$effects === void 0 ? {} : _extendModel$effects,
-      excludeModels = _extendModel.excludeModels,
-      includeModels = _extendModel.includeModels;
-  event.on(PLUGIN_EVENT.BEFORE_INJECT_MODEL, function (modelOpts) {
-    var namespace = modelOpts.namespace;
-    if (!namespace) return modelOpts;
+      if (isArray(includeModels)) {
+        if (includeModels.indexOf(namespace) === -1) return modelOpts;
+      } else if (isArray(excludeModels) && excludeModels.indexOf(namespace) !== -1) return modelOpts;
 
-    if (isArray(includeModels)) {
-      if (includeModels.indexOf(namespace) === -1) return modelOpts;
-    } else if (isArray(excludeModels) && excludeModels.indexOf(namespace) !== -1) return modelOpts;
-
-    return _extends({}, modelOpts, {
-      state: _extends({}, state, modelOpts.state),
-      reducers: _extends({}, reducers, modelOpts.reducers),
-      effects: _extends({}, effects, modelOpts.effects)
+      return _extends({}, modelOpts, {
+        state: _extends({}, state, modelOpts.state),
+        reducers: _extends({}, reducers, modelOpts.reducers),
+        effects: _extends({}, effects, modelOpts.effects)
+      });
     });
-  });
-}
-
-var extendModel$1 = (function (opts) {
-  if (!isObject(opts)) return noop;
-  extendModel = opts;
-  return extendModelPlugin;
+  };
 });
 
-export default extendModel$1;
+export default extendModel;
