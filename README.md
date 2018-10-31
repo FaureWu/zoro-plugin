@@ -40,6 +40,8 @@ $ npm run build
 
 请添加微信 `Faure5` 备注 `zoro` 咨询，开源不易，如果好用，欢迎star
 
+<img src="https://img.baobeicang.com/user_upload/rc-upload-1539676937885-2.jpeg" width="150" />
+
 ## License
 
 [MIT](https://tldrlegal.com/license/mit-license)

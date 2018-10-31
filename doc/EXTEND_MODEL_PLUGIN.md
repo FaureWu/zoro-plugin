@@ -9,10 +9,6 @@
 ```js
 import zoro from '@opcjs/zoro'
 import { createExtendModel } from '@opcjs/zoro-plugin'
-/*
-  或者你想仅仅引入其中某个plugin
-  import createLoading from '@opcjs/zoro-plugin/extendModel'
-*/
 
 const app = zoro()
 app.use(createExtendModel({
@@ -101,18 +97,13 @@ export default {
 
 // components/table1.js
 import React, { PureComponent } from 'react'
-import { actions } from 'roronoa-zoro'
+import { dispatcher } from '@opcjs/zoro'
 import { Table } from 'antd'
 import { connect } from 'react-redux' // 这里可以是其他库的连接器, 比如wepy中是wepy-redux, taro中是@tarojs/redux
 
-const { queryTableList, updatePagination } = actions('table1')
 const mapStateToProps = state => ({
   pagination: state.table1.pagination,
   lists: state.table1.lists,
-})
-const mapDispatchToProps = dispatch => ({
-  queryTableList: (params) => dispatch(queryTableList(params)),
-  updatePagination: (pagination) => dispatch(updatePagination(pagination)),
 })
 
 class Table1 extends PureComponent {
@@ -131,7 +122,8 @@ class Table1 extends PureComponent {
 
   handleChange = pagination => {
     const { updatePagination } = this.props
-    updatePagination(pagination)
+    dispatcher.table1.updatePagination(pagination)
+    dispatcher.table1.queryTableList({ /* 传递的参数 */ })
   }
 
   render() {
