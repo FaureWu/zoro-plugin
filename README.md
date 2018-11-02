@@ -35,6 +35,7 @@ $ npm run build
 
 * [loading plugin](https://github.com/FaureWu/zoro-plugin/blob/master/doc/LOADING_PLUGIN.md) 全局自动记录loading状态，减少重复工作
 * [extend model plugin](https://github.com/FaureWu/zoro-plugin/blob/master/doc/EXTEND_MODEL_PLUGIN.md) 扩展model，实现model公共逻辑，减少重复工作
+* [mixins plugin](https://github.com/FaureWu/zoro-plugin/blob/master/doc/MIXINS_PLUGIN.md) 扩展model，extend的另一种使用形式
 
 ## 开发交流
 

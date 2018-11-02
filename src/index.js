@@ -1,5 +1,5 @@
 import createLoading from './loading'
 import createExtendModel from './extendModel'
-import createMixins from './mixins'
+import createMixin from './mixin'
 
-export { createLoading, createExtendModel, createMixins }
+export { createLoading, createExtendModel, createMixin }

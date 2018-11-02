@@ -13,7 +13,7 @@ const replaceOption = {
   'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
 }
 
-const plugins = ['loading', 'extendModel']
+const plugins = ['loading', 'extendModel', 'mixin']
 
 export default plugins.map(name => {
   const outputFileName = name.replace(/([A-Z])/g, '-$1').toLowerCase()

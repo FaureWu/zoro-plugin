@@ -1,6 +1,6 @@
 {
   "name": "@opcjs/zoro-plugin",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "description": "the plugin for zoro",
   "main": "index.js",
   "keywords": [
@@ -11,7 +11,7 @@
     "build": "npm run clean && npm run build:es && npm run build:cjs",
     "build:es": "babel src --out-dir ./ --copy-files",
     "build:cjs": "rollup --config rollup.config.cjs.js",
-    "clean": "rm -rf ./extendModel.js ./index.js ./util.js ./loading.js ./dist",
+    "clean": "rm -rf ./extendModel.js ./index.js ./util.js ./loading.js ./mixin ./dist",
     "release": "npm run lint && npm run build && npm publish --access=public",
     "lint": "eslint src"
   },
