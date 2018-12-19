@@ -16,6 +16,27 @@ function _extends() {
   return _extends.apply(this, arguments);
 }
 
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+var isArray = function isArray(arr) {
+  return arr instanceof Array;
+};
+var isObject = function isObject(obj) {
+  return obj !== null && typeof obj === 'object' && !isArray(obj);
+};
 var isBoolean = function isBoolean(bool) {
   return typeof bool === 'boolean';
 };
@@ -68,12 +89,22 @@ var loading = (function (opt) {
       },
       reducers: {
         loading: function loading(_ref, _ref2) {
-          var _extends2, _extends3;
+          var _extends2, _extends3, _extends4;
 
-          var payload = _ref.payload;
+          var payload = _ref.payload,
+              _ref$meta = _ref.meta;
+          _ref$meta = _ref$meta === void 0 ? {} : _ref$meta;
+          var disableLoading = _ref$meta.disableLoading,
+              loadingKey = _ref$meta.loadingKey;
+
           var global = _ref2.global,
               model = _ref2.model,
-              effect = _ref2.effect;
+              rest = _objectWithoutPropertiesLoose(_ref2, ["global", "model"]);
+
+          if (disableLoading) return _extends({
+            global: global,
+            model: model
+          }, rest);
           var modelName = payload.modelName,
               effectName = payload.effectName;
           loadingCount.global++;
@@ -83,35 +114,53 @@ var loading = (function (opt) {
           }
 
           loadingCount.model[modelName]++;
+          var key = loadingKey || 'effect';
 
-          if (!loadingCount.effect[modelName + "/" + effectName]) {
-            loadingCount.effect[modelName + "/" + effectName] = 0;
+          if (!isObject(loadingCount[key])) {
+            loadingCount[key] = {};
           }
 
-          loadingCount.effect[modelName + "/" + effectName]++;
-          return {
+          if (!loadingCount[key][modelName + "/" + effectName]) {
+            loadingCount[key][modelName + "/" + effectName] = 0;
+          }
+
+          loadingCount[key][modelName + "/" + effectName]++;
+          var keyState = rest[key];
+          delete rest[key];
+          return _extends((_extends4 = {
             global: true,
-            model: _extends({}, model, (_extends2 = {}, _extends2[modelName] = true, _extends2)),
-            effect: _extends({}, effect, (_extends3 = {}, _extends3[modelName + "/" + effectName] = true, _extends3))
-          };
+            model: _extends({}, model, (_extends2 = {}, _extends2[modelName] = true, _extends2))
+          }, _extends4[key] = _extends({}, keyState, (_extends3 = {}, _extends3[modelName + "/" + effectName] = true, _extends3)), _extends4), rest);
         },
         loaded: function loaded(_ref3, _ref4) {
-          var _extends4, _extends5;
+          var _extends5, _extends6, _extends7;
 
-          var payload = _ref3.payload;
+          var payload = _ref3.payload,
+              _ref3$meta = _ref3.meta;
+          _ref3$meta = _ref3$meta === void 0 ? {} : _ref3$meta;
+          var disableLoading = _ref3$meta.disableLoading,
+              loadingKey = _ref3$meta.loadingKey;
+
           var global = _ref4.global,
               model = _ref4.model,
-              effect = _ref4.effect;
+              rest = _objectWithoutPropertiesLoose(_ref4, ["global", "model"]);
+
+          if (disableLoading) return _extends({
+            global: global,
+            model: model
+          }, rest);
           var modelName = payload.modelName,
               effectName = payload.effectName;
           loadingCount.global--;
           loadingCount.model[modelName]--;
-          loadingCount.effect[modelName + "/" + effectName]--;
-          return {
+          var key = loadingKey || 'effect';
+          loadingCount[key][modelName + "/" + effectName]--;
+          var keyState = rest[key];
+          delete rest[key];
+          return _extends((_extends7 = {
             global: loadingCount.global > 0,
-            model: _extends({}, model, (_extends4 = {}, _extends4[modelName] = loadingCount.model[modelName] > 0, _extends4)),
-            effect: _extends({}, effect, (_extends5 = {}, _extends5[modelName + "/" + effectName] = loadingCount.effect[modelName + "/" + effectName] > 0, _extends5))
-          };
+            model: _extends({}, model, (_extends5 = {}, _extends5[modelName] = loadingCount.model[modelName] > 0, _extends5))
+          }, _extends7[key] = _extends({}, keyState, (_extends6 = {}, _extends6[modelName + "/" + effectName] = loadingCount[key][modelName + "/" + effectName] > 0, _extends6)), _extends7), rest);
         }
       }
     };
@@ -137,7 +186,8 @@ var loading = (function (opt) {
         payload: {
           modelName: namespace,
           effectName: type
-        }
+        },
+        meta: action.meta
       });
     });
     event.on(PLUGIN_EVENT.ON_DID_EFFECT, function (action, _ref7) {
@@ -152,7 +202,8 @@ var loading = (function (opt) {
         payload: {
           modelName: namespace,
           effectName: type
-        }
+        },
+        meta: action.meta
       });
     });
   };
