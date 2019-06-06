@@ -27,7 +27,7 @@ export default plugins.map(name => {
     },
     plugins: [
       nodeResolve({
-        jsnext: true,
+        mainFields: ['module', 'main', 'jsnext'],
       }),
       babel(babelOption),
       replace(replaceOption),

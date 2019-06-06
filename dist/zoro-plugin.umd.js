@@ -423,8 +423,8 @@
     };
   });
 
-  exports.createLoading = loading;
   exports.createExtendModel = extendModel;
+  exports.createLoading = loading;
   exports.createMixin = mixin;
   exports.createPerf = perf;
 

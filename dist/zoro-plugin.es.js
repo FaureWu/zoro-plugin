@@ -417,4 +417,4 @@ var perf = (function (scope) {
   };
 });
 
-export { loading as createLoading, extendModel as createExtendModel, mixin as createMixin, perf as createPerf };
+export { extendModel as createExtendModel, loading as createLoading, mixin as createMixin, perf as createPerf };
