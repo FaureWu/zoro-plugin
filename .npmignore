@@ -1,4 +1,2 @@
-/src
-/dist
-/doc
-/__tests__
+/rollup*
+/tsconfig*

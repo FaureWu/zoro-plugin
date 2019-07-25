@@ -1,66 +1,47 @@
-function _extends() {
-  _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
 
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
         }
-      }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
+function assert(validate, message) {
+    if ((typeof validate === 'boolean' && !validate) ||
+        (typeof validate === 'function' && !validate())) {
+        throw new Error(message);
     }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
 }
 
-var isArray = function isArray(arr) {
-  return arr instanceof Array;
-};
-var isObject = function isObject(obj) {
-  return obj !== null && typeof obj === 'object' && !isArray(obj);
-};
-var isBoolean = function isBoolean(bool) {
-  return typeof bool === 'boolean';
-};
-var isFunction = function isFunction(func) {
-  return typeof func === 'function';
-};
-var assert = function assert(validate, message) {
-  if (isBoolean(validate) && !validate || isFunction(validate) && !validate()) {
-    throw new Error(message);
-  }
-};
+function createMixin(config) {
+    assert(typeof config === 'object' && config !== null && !(config instanceof Array), "createMixin param must be an Object, but we get " + typeof config);
+    return function createMixin(plugin, option) {
+        plugin.on(option.PLUGIN_EVENT.ON_BEFORE_CREATE_MODEL, function (modelConfig) {
+            if (!(modelConfig.mixins instanceof Array) ||
+                modelConfig.mixins.indexOf(config.namespace) === -1) {
+                return modelConfig;
+            }
+            return __assign({}, modelConfig, { state: __assign({}, config.state, modelConfig.state), reducers: __assign({}, config.reducers, modelConfig.state), effects: __assign({}, config.effects, modelConfig.effects) });
+        });
+    };
+}
 
-var mixin = (function (opt) {
-  assert(isObject(opt), "createMixin param must be an Object, but we get " + typeof opt);
-  return function (event, _ref) {
-    var DIVIDER = _ref.DIVIDER,
-        PLUGIN_EVENT = _ref.PLUGIN_EVENT;
-    var _opt$namespace = opt.namespace,
-        namespace = _opt$namespace === void 0 ? '' : _opt$namespace,
-        _opt$state = opt.state,
-        state = _opt$state === void 0 ? {} : _opt$state,
-        _opt$reducers = opt.reducers,
-        reducers = _opt$reducers === void 0 ? {} : _opt$reducers,
-        _opt$effects = opt.effects,
-        effects = _opt$effects === void 0 ? {} : _opt$effects;
-    event.on(PLUGIN_EVENT.BEFORE_INJECT_MODEL, function (modelOpts) {
-      var mixins = modelOpts.mixins;
-
-      if (!isArray(mixins) || mixins.indexOf(namespace) === -1) {
-        return modelOpts;
-      }
-
-      return _extends({}, modelOpts, {
-        state: _extends({}, state, modelOpts.state),
-        reducers: _extends({}, reducers, modelOpts.reducers),
-        effects: _extends({}, effects, modelOpts.effects)
-      });
-    });
-  };
-});
-
-export default mixin;
+export default createMixin;

@@ -1,21 +1,42 @@
 {
   "extends": [
-    "standard",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
     "plugin:prettier/recommended",
-    "plugin:jest/recommended"
+    "plugin:@typescript-eslint/eslint-recommended"
   ],
+  "plugins": ["prettier", "@typescript-eslint"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "jest": true
+  },
   "rules": {
-    "prettier/prettier": [
+    "@typescript-eslint/indent": [
       "error",
+      2,
+      { "SwitchCase": 1, "flatTernaryExpressions": true }
+    ],
+    "comma-dangle": "off",
+    "indent": [
+      "error",
+      2,
       {
-        "printWidth": 80,
-        "singleQuote": true,
-        "trailingComma": "all",
-        "bracketSpacing": true,
-        "jsxBracketSameLine": false,
-        "parser": "babel",
-        "semi": false
+        "SwitchCase": 1,
+        "flatTernaryExpressions": true
       }
-    ]
+    ],
+    "no-undef": "error",
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/semi": "error",
+    "prettier/prettier": "error",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/explicit-member-accessibility": "off"
   }
 }
