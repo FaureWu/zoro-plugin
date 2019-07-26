@@ -1,5 +1,5 @@
 import * as Z from '@opcjs/zoro';
-import * as P from '../plugin';
+import * as P from '../typing';
 import { assert, parseModelActionType } from '../util';
 
 let isCreated = false;

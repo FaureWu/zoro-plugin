@@ -20,6 +20,7 @@
     "node_modules",
     "rollup.config.ts",
     "rollup.config.weapp.ts",
+    "gulpfile.ts",
     "dist"
   ]
 }

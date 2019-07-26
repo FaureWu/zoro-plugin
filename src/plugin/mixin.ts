@@ -1,5 +1,5 @@
 import * as Z from '@opcjs/zoro';
-import * as P from '../plugin';
+import * as P from '../typing';
 import { assert } from '../util';
 
 export default function createMixin(config: P.MixinConfig): Z.PluginCreator {
@@ -25,7 +25,7 @@ export default function createMixin(config: P.MixinConfig): Z.PluginCreator {
         return {
           ...modelConfig,
           state: { ...config.state, ...modelConfig.state },
-          reducers: { ...config.reducers, ...modelConfig.state },
+          reducers: { ...config.reducers, ...modelConfig.reducers },
           effects: { ...config.effects, ...modelConfig.effects },
         };
       },

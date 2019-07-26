@@ -39,7 +39,7 @@ function createMixin(config) {
                 modelConfig.mixins.indexOf(config.namespace) === -1) {
                 return modelConfig;
             }
-            return __assign({}, modelConfig, { state: __assign({}, config.state, modelConfig.state), reducers: __assign({}, config.reducers, modelConfig.state), effects: __assign({}, config.effects, modelConfig.effects) });
+            return __assign({}, modelConfig, { state: __assign({}, config.state, modelConfig.state), reducers: __assign({}, config.reducers, modelConfig.reducers), effects: __assign({}, config.effects, modelConfig.effects) });
         });
     };
 }

@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import * as Z from '@opcjs/zoro';
-import * as P from '../plugin';
+import * as P from '../typing';
 import { assert } from '../util';
 
 function resolveData(current: object, next: object): P.ResolveData {
