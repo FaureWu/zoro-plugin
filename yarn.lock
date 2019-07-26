@@ -157,10 +157,10 @@
     mkdirp "^0.5.1"
     rimraf "^2.5.2"
 
-"@opcjs/zoro@^3.0.0-beta3":
-  version "3.0.0-beta3"
-  resolved "https://registry.yarnpkg.com/@opcjs/zoro/-/zoro-3.0.0-beta3.tgz#d972e874584fe0f95fec74c9aeb66fdfd55cafb0"
-  integrity sha512-E0jlEXFTm9a3LYfh70wduO/W+CyYSGkh3MVcX/GF0RvzM80E6C48g6JneSG13PqkchEKlHmwm194AnhxS30T1w==
+"@opcjs/zoro@^3.0.0-beta6":
+  version "3.0.0-beta6"
+  resolved "https://registry.yarnpkg.com/@opcjs/zoro/-/zoro-3.0.0-beta6.tgz#60fec132f5bf7c8db5f89066d791afbd68f7911b"
+  integrity sha512-wmbxavBEy9bO6LwFgbCI2G6Jr0Kkttcr/KREXHuFi8ZhdPVt1QqnHrIiCZghzUt4c9xtlWMlL6lRFHWshiYdzw==
   dependencies:
     redux "^4.0.0"
 

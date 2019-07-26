@@ -17,7 +17,7 @@ export default plugins.map(name => {
     output: {
       format: 'es',
       indent: false,
-      file: `dist/zoro-${outputFileName}.js`,
+      file: `dist/${outputFileName}.js`,
     },
     plugins: [
       nodeResolve({
