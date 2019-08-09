@@ -5,4 +5,10 @@ export interface MixinConfig {
   effects?: Z.ModelEffects;
 }
 
-export function createMixin(config: MixinConfig): Z.PluginCreator;
+export type Merge = (mixinValue: any, modelValue: any) => any;
+
+export interface Option {
+  [prop: string]: boolean | Merge;
+}
+
+export function createMixin(config: MixinConfig, opt: Option): Z.PluginCreator;
