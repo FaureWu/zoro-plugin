@@ -2,7 +2,10 @@ import * as Z from '@opcjs/zoro';
 import * as P from '../typing';
 import { assert } from '../util';
 
-export default function createMixin(config: P.MixinConfig): Z.PluginCreator {
+export default function createMixin(
+  config: P.MixinConfig,
+  opt: P.Option = {},
+): Z.PluginCreator {
   assert(
     typeof config === 'object' && config !== null && !(config instanceof Array),
     `createMixin param must be an Object, but we get ${typeof config}`,
@@ -22,11 +25,26 @@ export default function createMixin(config: P.MixinConfig): Z.PluginCreator {
           return modelConfig;
         }
 
+        const otherMergeData = Object.keys(opt).reduce(
+          (target: any, key: string): any => {
+            const merge = opt[key];
+            if (typeof merge === 'function') {
+              target[key] = merge(config[key], modelConfig[key]);
+              return target;
+            }
+
+            target[key] = { ...config[key], ...modelConfig[key] };
+            return target;
+          },
+          {},
+        );
+
         return {
           ...modelConfig,
           state: { ...config.state, ...modelConfig.state },
           reducers: { ...config.reducers, ...modelConfig.reducers },
           effects: { ...config.effects, ...modelConfig.effects },
+          ...otherMergeData,
         };
       },
     );

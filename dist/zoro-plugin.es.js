@@ -137,7 +137,8 @@ function createLoading(config) {
     };
 }
 
-function createMixin(config) {
+function createMixin(config, opt) {
+    if (opt === void 0) { opt = {}; }
     assert(typeof config === 'object' && config !== null && !(config instanceof Array), "createMixin param must be an Object, but we get " + typeof config);
     return function createMixin(plugin, option) {
         plugin.on(option.PLUGIN_EVENT.ON_BEFORE_CREATE_MODEL, function (modelConfig) {
@@ -145,7 +146,16 @@ function createMixin(config) {
                 modelConfig.mixins.indexOf(config.namespace) === -1) {
                 return modelConfig;
             }
-            return __assign({}, modelConfig, { state: __assign({}, config.state, modelConfig.state), reducers: __assign({}, config.reducers, modelConfig.reducers), effects: __assign({}, config.effects, modelConfig.effects) });
+            var otherMergeData = Object.keys(opt).reduce(function (target, key) {
+                var merge = opt[key];
+                if (typeof merge === 'function') {
+                    target[key] = merge(config[key], modelConfig[key]);
+                    return target;
+                }
+                target[key] = __assign({}, config[key], modelConfig[key]);
+                return target;
+            }, {});
+            return __assign({}, modelConfig, { state: __assign({}, config.state, modelConfig.state), reducers: __assign({}, config.reducers, modelConfig.reducers), effects: __assign({}, config.effects, modelConfig.effects) }, otherMergeData);
         });
     };
 }
