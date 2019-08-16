@@ -1,6 +1,6 @@
 {
   "name": "@opcjs/zoro-plugin",
-  "version": "3.0.0-beta2",
+  "version": "3.0.0",
   "description": "the plugin for zoro",
   "main": "dist/zoro-plugin.umd.js",
   "module": "dist/zoro-plugin.es.js",
